@@ -1,6 +1,6 @@
 flask
 python-dotenv
 pytz
-#pydantic
 flask-wtf
+flask-login
 flask-sqlalchemy

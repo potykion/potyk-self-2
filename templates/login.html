@@ -1,0 +1,16 @@
+{% extends '_base.html' %}
+
+{% block style %}
+{% endblock %}
+
+{% set margin_top = '30vh' %}
+
+{% block main %}
+    <form method="POST">
+        {{ form.csrf_token }}
+        {{ form.secret }}
+        <div style="display: flex; justify-content: end">
+            <button type="submit">GO</button>
+        </div>
+    </form>
+{% endblock %}
