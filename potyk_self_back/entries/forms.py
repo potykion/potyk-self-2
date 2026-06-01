@@ -13,6 +13,6 @@ class EntryForm(FlaskForm):
     text = TextAreaField(
         "New Entry",
         validators=[DataRequired()],
-        render_kw={"required": True, "rows": 5, "placeholder": "New Entry"},
+        render_kw={"required": True, "placeholder": "New Entry"},
     )
     datetime_msk = DateTimeLocalField()
