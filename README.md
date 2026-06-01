@@ -8,7 +8,7 @@
 
 ## Prod Setup
 
-### First
+### First time
 
 ```shell
 ssh-keygen
@@ -26,6 +26,7 @@ source ./.venv/bin/activate
 pip install -r requirements.txt
 # fill env w FLASK_APP=main & FLASK_SECRET=...
 nano .env
+python setup_db.py
 
 sudo cp ./potyk-self-2.service /etc/systemd/system/potyk-self-2.service
 sudo chmod 644 /etc/systemd/system/potyk-self-2.service
