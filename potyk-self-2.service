@@ -1,0 +1,19 @@
+[Unit]
+Description=Personal diary
+After=network.target
+
+[Service]
+User=leybovich-nikita
+# e.g. /home/leybovich-nikita = /home/leybovich-nikita
+# e.g. potyk-self-2 = /wine-wish
+# e.g. 5005 = 5002
+WorkingDirectory=/home/leybovich-nikita/potyk-self-2
+EnvironmentFile=/home/leybovich-nikita/potyk-self-2/.env
+ExecStart=/home/leybovich-nikita/potyk-self-2/.venv/bin/flask run --host=0.0.0.0 --port=5005
+Restart=always
+RestartSec=10
+StandardOutput=file:/home/leybovich-nikita/potyk-self-2/logs/flask.log
+StandardError=file:/home/leybovich-nikita/potyk-self-2/logs/flask.error.log
+
+[Install]
+WantedBy=multi-user.target

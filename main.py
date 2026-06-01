@@ -9,7 +9,7 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = os.environ["FLASK_SECRET"]
 
-    DATABASE = "main.db"
+    DATABASE = "potyk-self-2.db"
 
     def get_db():
         db = getattr(g, "_database", None)
@@ -27,7 +27,6 @@ def create_app():
     @app.route("/")
     def index():
         cur = get_db().cursor()
-        rows = cur.execute("SELECT * FROM table").fetchall()
         return flask.render_template("index.html")
 
     @app.route("/form", methods=["GET", "POST"])
