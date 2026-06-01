@@ -18,7 +18,9 @@ def index():
     cur_date = msk_now.date()
     cur_date_weekday = weekday_to_ru(cur_date.weekday())
 
-    entries = db.session.execute(db.select(DiaryEntry)).scalars()
+    entries = db.session.execute(
+        db.select(DiaryEntry).order_by(DiaryEntry.datetime_msk.desc())
+    ).scalars()
     entry_forms = [EntryForm(obj=entry) for entry in entries]
 
     form = EntryForm()
@@ -46,7 +48,7 @@ def index():
 def edit_entry(id):
     entry = db.get_or_404(DiaryEntry, id)
 
-    if request.form.get('action') == 'delete':
+    if request.form.get("action") == "delete":
         db.session.delete(entry)
 
     form = EntryForm(obj=entry)
