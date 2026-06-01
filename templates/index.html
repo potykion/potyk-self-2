@@ -1,10 +1,76 @@
 {% extends '_base.html' %}
 
 {% block style %}
+    <style>
+        button {
+            padding: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            border: 0;
+        }
+
+        input[type=text] {
+            width: 100%;
+            border: 0;
+        }
+
+        .entries {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .entry {
+            padding: 5px;
+
+        }
+    </style>
 {% endblock %}
 
 {% block main %}
-<h1>INDEX</h1>
+
+    <h1>Сегодня: {{ cur_date }} — {{ cur_date_weekday }}</h1>
+
+    <details open>
+        <summary>
+            <h2 style="display: inline-block">Добавить новую запись</h2>
+        </summary>
+        <form method="POST">
+            {{ form.csrf_token }}
+
+            {{ form.title }}
+
+            {{ form.text }}
+
+
+            <div style="display: flex; flex-direction: row-reverse">
+                <button type="submit">Сохранить</button>
+            </div>
+        </form>
+
+    </details>
+
+    <h2>Записи за сегодня</h2>
+    <div class="entries">
+        {% for entry_form in entry_forms %}
+            <form method="POST" action="/edit-entry/{{ entry_form.id.data }}">
+                {{ entry_form.csrf_token }}
+
+                {{ entry_form.title }}
+
+                {{ entry_form.text }}
+
+
+                <div style="display: flex; flex-direction: row-reverse">
+                    <button type="submit">Сохранить</button>
+                </div>
+            </form>
+
+        {% endfor %}
+    </div>
+
 
 
 {% endblock %}
