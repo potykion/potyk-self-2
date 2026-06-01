@@ -18,8 +18,8 @@
     {% block style %}
     {% endblock %}
 </head>
-<body>
-<main style="margin-top: {{ margin_top or '5px' }}">
+<body style="display: flex; flex-direction: column; height: 100vh;">
+<main style="margin-top: {{ margin_top or '5px' }}; flex-grow: 1">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -32,5 +32,11 @@
     {% block main %}
     {% endblock %}
 </main>
+<footer style="text-align: center; margin-bottom: 5px">
+    <small>
+        <a href="https://github.com/potykion/potyk-self-2">GitHub</a>
+    </small>
+</footer>
+
 </body>
 </html>
