@@ -11,7 +11,8 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Сегодня: {{ cur_date }} — {{ cur_date_weekday }}</h1>
+{#    <a style="border: 1px solid black; border-radius: 10px; padding: 5px">◀️ Вчера </a>#}
+    <h1>Сегодня<br>{{ cur_date }}<br>{{ cur_date_weekday }}</h1>
 
     <details open>
         <summary>
@@ -42,8 +43,12 @@
                 {{ entry_form.text }}
 
 
-                <div style="display: flex; flex-direction: row-reverse">
-                    <button type="submit">Сохранить</button>
+                <div style="display: flex; justify-content: space-between">
+                    <small style="color: darkgray">{{ entry_form.datetime_msk.data }}</small>
+                    <div>
+                        <button type="submit" name="action" value="delete">Удалить</button>
+                        <button type="submit">Сохранить</button>
+                    </div>
                 </div>
             </form>
         {% endfor %}
