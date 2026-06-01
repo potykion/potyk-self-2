@@ -5,6 +5,8 @@ button {
 textarea {
     width: -webkit-fill-available;
     border: 0;
+    overflow-y: hidden;
+    resize: none;
 }
 
 input[type=text] {
