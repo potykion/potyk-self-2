@@ -13,7 +13,11 @@ class EntryForm(FlaskForm):
     text = TextAreaField(
         "New Entry",
         validators=[DataRequired()],
-        render_kw={"required": True, "placeholder": "New Entry"},
+        render_kw={
+            "required": True,
+            "placeholder": "New Entry",
+            "rows": 3,
+        },
     )
     tags = StringField(
         "Tags",

@@ -22,11 +22,8 @@
             {{ form.csrf_token }}
 
             {{ form.title }}
-
-            {{ form.tags(class_="tags-input") }}
-
             {{ form.text }}
-
+            {{ form.tags(class_="tags-input") }}
 
             <div style="display: flex; flex-direction: row-reverse; gap: 8px">
                 <button type="submit">Сохранить</button>
@@ -42,11 +39,8 @@
                 {{ entry_form.csrf_token }}
 
                 {{ entry_form.title }}
-
-                {{ entry_form.tags(class_="tags-input") }}
-
                 {{ entry_form.text }}
-
+                {{ entry_form.tags(class_="tags-input") }}
 
                 <div style="display: flex; justify-content: space-between; align-items: center">
                     <small style="color: darkgray">{{ entry_form.datetime_msk.data }}</small>

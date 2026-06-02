@@ -1,9 +1,16 @@
+from dotenv import load_dotenv
+
+load_dotenv()
 from logging.config import fileConfig
+from pathlib import Path
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
+from main import create_app
+from potyk_self_back.core.db import db
+from potyk_self_back.entries import entites  # noqa: F401
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -18,7 +25,16 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+target_metadata = db.metadata
+
+app = create_app()
+with app.app_context():
+    db_url = app.config["SQLALCHEMY_DATABASE_URI"]
+    if db_url.startswith("sqlite:///") and not db_url.startswith("sqlite:////"):
+        relative_path = db_url.replace("sqlite:///", "", 1)
+        absolute_path = (Path(app.instance_path) / relative_path).resolve()
+        db_url = f"sqlite:///{absolute_path.as_posix()}"
+config.set_main_option("sqlalchemy.url", db_url)
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
