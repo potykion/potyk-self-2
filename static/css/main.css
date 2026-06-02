@@ -70,14 +70,19 @@ a {
 }
 
 .app-footer {
-    text-align: center;
     padding-bottom: 10px;
     padding-top: 10px;
 }
 
-.toolbar {
+.footer-row {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.theme-switcher {
+    display: flex;
     align-items: center;
     gap: 8px;
 }

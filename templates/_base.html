@@ -15,14 +15,6 @@
 </head>
 <body class="app-layout">
 <main class="app-main" style="margin-top: {{ margin_top or '5px' }};">
-    <div class="toolbar">
-        <label for="theme-mode">Тема:</label>
-        <select id="theme-mode" aria-label="Выбор темы">
-            <option value="system">Системная</option>
-            <option value="light">Светлая</option>
-            <option value="dark">Темная</option>
-        </select>
-    </div>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -38,8 +30,21 @@
 <footer class="app-footer">
     <hr>
     <small>
-        <a href="https://github.com/potykion/potyk-self-2">GitHub</a>
+
+        <div class="footer-row">
+            <a href="https://github.com/potykion/potyk-self-2">GitHub</a>
+            <div class="theme-switcher">
+                <label for="theme-mode">Тема:</label>
+                <select id="theme-mode" aria-label="Выбор темы">
+                    <option value="system">Системная</option>
+                    <option value="light">Светлая</option>
+                    <option value="dark">Темная</option>
+                </select>
+            </div>
+
+        </div>
     </small>
+            
 </footer>
 
 <script>
