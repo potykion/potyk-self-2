@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField, StringField
+from wtforms import TextAreaField, StringField, BooleanField
 from wtforms.fields.datetime import DateTimeLocalField
 from wtforms.validators import DataRequired
 
@@ -30,3 +30,4 @@ class EntryForm(FlaskForm):
         },
     )
     datetime_msk = DateTimeLocalField()
+    pinned = BooleanField(default=False)

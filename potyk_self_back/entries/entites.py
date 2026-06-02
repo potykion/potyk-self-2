@@ -20,3 +20,7 @@ class DiaryEntry(db.Model):
         nullable=False,
         default=list,
     )
+    pinned: Mapped[bool] = mapped_column(
+        nullable=False,
+        default=False,
+    )

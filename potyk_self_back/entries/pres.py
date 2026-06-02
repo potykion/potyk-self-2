@@ -30,10 +30,20 @@ def index():
     entries = db.session.execute(
         db.select(DiaryEntry).order_by(DiaryEntry.datetime_msk.desc())
     ).scalars().all()
-    entry_forms = [EntryForm(obj=entry) for entry in entries]
+    pinned_entries = [entry for entry in entries if entry.pinned]
+    regular_entries = [entry for entry in entries if not entry.pinned]
+    pinned_entry_forms = [EntryForm(obj=entry) for entry in pinned_entries]
+    regular_entry_forms = [EntryForm(obj=entry) for entry in regular_entries]
     all_tags: list[str] = []
     all_tags_seen: set[str] = set()
-    for entry, entry_form in zip(entries, entry_forms):
+    for entry, entry_form in zip(pinned_entries, pinned_entry_forms):
+        entry_form.tags.data = ",".join(entry.tags or [])
+        for tag in entry.tags or []:
+            if tag and tag not in all_tags_seen:
+                all_tags_seen.add(tag)
+                all_tags.append(tag)
+
+    for entry, entry_form in zip(regular_entries, regular_entry_forms):
         entry_form.tags.data = ",".join(entry.tags or [])
         for tag in entry.tags or []:
             if tag and tag not in all_tags_seen:
@@ -56,8 +66,10 @@ def index():
         cur_date=cur_date,
         cur_date_weekday=cur_date_weekday,
         form=form,
-        entries=entries,
-        entry_forms=entry_forms,
+        pinned_entries=pinned_entries,
+        pinned_entry_forms=pinned_entry_forms,
+        regular_entries=regular_entries,
+        regular_entry_forms=regular_entry_forms,
         all_tags=all_tags,
     )
 
@@ -69,6 +81,13 @@ def edit_entry(id):
 
     if request.form.get("action") == "delete":
         db.session.delete(entry)
+        db.session.commit()
+        return flask.redirect("/")
+
+    if request.form.get("action") == "toggle-pin":
+        entry.pinned = not entry.pinned
+        db.session.commit()
+        return flask.redirect("/")
 
     form = EntryForm(obj=entry)
     if form.validate_on_submit():
