@@ -46,7 +46,7 @@
                         {{ entry_form.tags }}
 
                         <div style="display: flex; justify-content: space-between; align-items: center">
-                            <small style="color: darkgray">{{ entry_form.datetime_msk.data }}</small>
+                            <small class="text-muted">{{ entry_form.datetime_msk.data }}</small>
                             <div>
                                 <button type="submit" name="action" value="toggle-pin" title="Открепить">📌</button>
                                 <button type="submit" name="action" value="delete">🗑️</button>
@@ -55,12 +55,10 @@
                         </div>
                     </form>
 
-                    {% if not loop.last %}
-                        <hr>
-                    {% endif %}
+
                 {% endfor %}
             {% else %}
-                <small style="color: darkgray">Нет закрепленных записей</small>
+                <small class="text-muted">Нет закрепленных записей</small>
             {% endif %}
         </div>
     </details>
@@ -80,7 +78,7 @@
                     {{ entry_form.tags }}
 
                     <div style="display: flex; justify-content: space-between; align-items: center">
-                        <small style="color: darkgray">{{ entry_form.datetime_msk.data }}</small>
+                        <small class="text-muted">{{ entry_form.datetime_msk.data }}</small>
                         <div>
                             <button type="submit" name="action" value="toggle-pin" title="Закрепить">📌</button>
                             <button type="submit" name="action" value="delete">🗑️</button>
@@ -89,9 +87,7 @@
                     </div>
                 </form>
 
-                {% if not loop.last %}
-                    <hr>
-                {% endif %}
+
             {% endfor %}
         </div>
     </details>

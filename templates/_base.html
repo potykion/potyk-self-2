@@ -1,18 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>potyk-self-2</title>
-    <style>
-        body {
-            max-width: 700px;
-            margin: auto;
-            font-family: "Rubik", system-ui;
-        }
-    </style>
-
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.6.1/dist/css/tom-select.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.6.1/dist/js/tom-select.complete.min.js"></script>
 
@@ -21,8 +13,16 @@
     {% block style %}
     {% endblock %}
 </head>
-<body style="display: flex; flex-direction: column; height: 100vh;">
-<main style="margin-top: {{ margin_top or '5px' }}; flex-grow: 1">
+<body class="app-layout">
+<main class="app-main" style="margin-top: {{ margin_top or '5px' }};">
+    <div class="toolbar">
+        <label for="theme-mode">Тема:</label>
+        <select id="theme-mode" aria-label="Выбор темы">
+            <option value="system">Системная</option>
+            <option value="light">Светлая</option>
+            <option value="dark">Темная</option>
+        </select>
+    </div>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -35,12 +35,29 @@
     {% block main %}
     {% endblock %}
 </main>
-<footer style="text-align: center; padding-bottom: 10px; padding-top: 10px; ">
-    <hr >
+<footer class="app-footer">
+    <hr>
     <small>
         <a href="https://github.com/potykion/potyk-self-2">GitHub</a>
     </small>
 </footer>
 
+<script>
+    const themeModeSelect = document.getElementById("theme-mode");
+    const savedThemeMode = localStorage.getItem("theme-mode");
+    const initialThemeMode = savedThemeMode || "system";
+
+    const applyThemeMode = (mode) => {
+        document.documentElement.setAttribute("data-theme", mode);
+        localStorage.setItem("theme-mode", mode);
+        themeModeSelect.value = mode;
+    };
+
+    applyThemeMode(initialThemeMode);
+
+    themeModeSelect.addEventListener("change", (event) => {
+        applyThemeMode(event.target.value);
+    });
+</script>
 </body>
 </html>
