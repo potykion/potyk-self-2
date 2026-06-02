@@ -15,4 +15,8 @@ class EntryForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"required": True, "placeholder": "New Entry"},
     )
+    tags = StringField(
+        "Tags",
+        render_kw={"placeholder": "Теги"},
+    )
     datetime_msk = DateTimeLocalField()

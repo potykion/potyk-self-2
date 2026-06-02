@@ -11,6 +11,15 @@ from potyk_self_back.entries.forms import EntryForm
 entries_blueprint = Blueprint("entries", __name__)
 
 
+def _parse_tags(raw_tags: str | None) -> list[str]:
+    if not raw_tags:
+        return []
+
+    tags = [tag.strip() for tag in raw_tags.split(",")]
+    # Keep insertion order and drop empty/duplicate tags.
+    return list(dict.fromkeys(tag for tag in tags if tag))
+
+
 @entries_blueprint.route("/", methods=["GET", "POST"])
 @login_required
 def index():
@@ -20,14 +29,23 @@ def index():
 
     entries = db.session.execute(
         db.select(DiaryEntry).order_by(DiaryEntry.datetime_msk.desc())
-    ).scalars()
+    ).scalars().all()
     entry_forms = [EntryForm(obj=entry) for entry in entries]
+    all_tags: list[str] = []
+    all_tags_seen: set[str] = set()
+    for entry, entry_form in zip(entries, entry_forms):
+        entry_form.tags.data = ",".join(entry.tags or [])
+        for tag in entry.tags or []:
+            if tag and tag not in all_tags_seen:
+                all_tags_seen.add(tag)
+                all_tags.append(tag)
 
     form = EntryForm()
 
     if request.method == "POST" and form.validate_on_submit():
         form_data = form.data
         form_data.pop("csrf_token")
+        form_data["tags"] = _parse_tags(form_data.get("tags"))
         entry = DiaryEntry(**form_data)
         db.session.add(entry)
         db.session.commit()
@@ -40,6 +58,7 @@ def index():
         form=form,
         entries=entries,
         entry_forms=entry_forms,
+        all_tags=all_tags,
     )
 
 
@@ -53,7 +72,10 @@ def edit_entry(id):
 
     form = EntryForm(obj=entry)
     if form.validate_on_submit():
-        form.populate_obj(entry)
+        entry.title = form.title.data
+        entry.text = form.text.data
+        entry.datetime_msk = form.datetime_msk.data
+        entry.tags = _parse_tags(form.tags.data)
         db.session.commit()
 
     return flask.redirect("/")

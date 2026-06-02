@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block main %}
-{#    <a style="border: 1px solid black; border-radius: 10px; padding: 5px">◀️ Вчера </a>#}
+    {#    <a style="border: 1px solid black; border-radius: 10px; padding: 5px">◀️ Вчера </a>#}
     <h1>Сегодня<br>{{ cur_date }}<br>{{ cur_date_weekday }}</h1>
 
     <details open>
@@ -22,6 +22,8 @@
             {{ form.csrf_token }}
 
             {{ form.title }}
+
+            {{ form.tags(class_="tags-input") }}
 
             {{ form.text }}
 
@@ -41,6 +43,8 @@
 
                 {{ entry_form.title }}
 
+                {{ entry_form.tags(class_="tags-input") }}
+
                 {{ entry_form.text }}
 
 
@@ -58,4 +62,17 @@
     <script src="{{ url_for('static', filename='js/auto-resize-textarea.js') }}"></script>
     <script src="{{ url_for('static', filename='js/new-entry-draft.js') }}"></script>
     <script src="{{ url_for('static', filename='js/entry-delete-confirm.js') }}"></script>
+    <script>
+        const existingTags = {{ all_tags | tojson }};
+        const tagOptions = existingTags.map((tag) => ({ value: tag, text: tag }));
+
+        document.querySelectorAll(".tags-input").forEach((el) => {
+            new TomSelect(el, {
+                plugins: ["remove_button"],
+                create: true,
+                persist: false,
+                options: tagOptions,
+            });
+        });
+    </script>
 {% endblock %}

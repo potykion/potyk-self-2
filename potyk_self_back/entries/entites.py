@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy.orm import mapped_column, Mapped
+from sqlalchemy import JSON
 
 from potyk_self_back.core.db import db
 from potyk_self_back.core.dt_utils import get_msk_now
@@ -13,4 +14,9 @@ class DiaryEntry(db.Model):
     datetime_msk: Mapped[datetime] = mapped_column(
         nullable=False,
         default=get_msk_now,
+    )
+    tags: Mapped[list[str]] = mapped_column(
+        JSON,
+        nullable=False,
+        default=list,
     )
