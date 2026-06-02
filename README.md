@@ -39,7 +39,8 @@ sudo systemctl enable --now potyk-self-2.service
 ```shell
 ssh -l leybovich-nikita 84.201.131.244
 cd potyk-self-2
-git pull 
+git pull
+pip install -r requirements.txt 
 alembic upgrade head
 sudo systemctl restart potyk-self-2.service
 ```
