@@ -7,19 +7,32 @@ textarea {
     border: 0;
     overflow-y: hidden;
     resize: none;
+    font-family: inherit;
 }
 
-input[type=text] {
+.text-input {
     width: -webkit-fill-available;
     border: 0;
-    padding: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .alert {
     padding: 10px;
     border-radius: 10px;
 }
+
 .alert-error {
     color: red;
     background-color: lightpink;
+}
+
+.ts-control {
+    border: none;
+    padding: 0 !important;
+}
+
+hr {
+    border: 1px solid whitesmoke;
+    width: 100%;
 }

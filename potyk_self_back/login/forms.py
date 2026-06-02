@@ -11,5 +11,9 @@ class LoginForm(FlaskForm):
             DataRequired(),
             AnyOf([os.environ["FLASK_SECRET"]]),
         ],
-        render_kw={"required": True, "placeholder": "Enter secret"},
+        render_kw={
+            "required": True,
+            "placeholder": "Enter secret",
+            "class": "text-input",
+        },
     )
