@@ -52,7 +52,7 @@ body {
     font-family: "Rubik", system-ui;
     background: var(--bg-color);
     color: var(--text-color);
-    padding: 5px;
+    padding: 4px;
 }
 
 a {
@@ -118,6 +118,7 @@ button:hover {
 textarea {
     width: -webkit-fill-available;
     border: 0;
+    padding: 0;
     overflow-y: hidden;
     resize: none;
     font-family: inherit;
@@ -126,6 +127,7 @@ textarea {
 .text-input {
     width: -webkit-fill-available;
     border: 0;
+    padding-left: 0;
     padding-top: 5px;
     padding-bottom: 5px;
 }
@@ -160,4 +162,9 @@ textarea {
 hr {
     border: 1px solid var(--border-color);
     width: 100%;
+}
+
+
+.ts-wrapper.multi .ts-control > div {
+    padding: 0;
 }
