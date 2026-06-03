@@ -1,3 +1,5 @@
+import random
+
 import flask
 from flask import Blueprint
 from flask import request
@@ -50,6 +52,11 @@ def index():
                 all_tags_seen.add(tag)
                 all_tags.append(tag)
 
+    random_entry = random.choice(entries) if entries else None
+    random_entry_form = None
+    if random_entry:
+        random_entry_form = EntryForm(obj=random_entry)
+        random_entry_form.tags.data = ",".join(random_entry.tags or [])
     form = EntryForm()
 
     if request.method == "POST" and form.validate_on_submit():
@@ -71,6 +78,7 @@ def index():
         regular_entries=regular_entries,
         regular_entry_forms=regular_entry_forms,
         all_tags=all_tags,
+        random_entry_form=random_entry_form,
     )
 
 

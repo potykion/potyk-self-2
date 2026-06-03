@@ -13,7 +13,7 @@
     </form>
 {% endmacro %}
 
-{% macro entry_form(entry_form, pin_title) %}
+{% macro entry_form(entry_form, pin_title=None) %}
     <form method="POST" action="/edit-entry/{{ entry_form.id.data }}">
         {{ entry_form.csrf_token }}
 
@@ -24,7 +24,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center">
             <small class="text-muted">{{ entry_form.datetime_msk.data }}</small>
             <div>
-                <button type="submit" name="action" value="toggle-pin" title="{{ pin_title }}">📌</button>
+                <button type="submit" name="action" value="toggle-pin" title="{{ pin_title if pin_title is not none else ('Открепить' if entry_form.pinned.data else 'Закрепить') }}">📌</button>
                 <button type="submit" name="action" value="delete">🗑️</button>
                 <button type="submit">💾</button>
             </div>
