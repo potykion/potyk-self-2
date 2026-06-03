@@ -1,4 +1,5 @@
 {% extends '_base.html' %}
+{% from '_macros.html' import new_entry_form, entry_form %}
 
 {% block style %}
     <style>
@@ -17,18 +18,7 @@
         <summary>
             <h2 style="display: inline-block">Добавить новую запись</h2>
         </summary>
-        <form method="POST" id="new-entry-form">
-            {{ form.csrf_token }}
-
-            {{ form.title }}
-            {{ form.text }}
-            {{ form.tags }}
-
-            <div style="display: flex; flex-direction: row-reverse; gap: 8px">
-                <button type="submit">💾</button>
-                <button type="button" id="new-entry-clear">⏹️</button>
-            </div>
-        </form>
+        {{ new_entry_form(form) }}
     </details>
 
     <details open>
@@ -37,25 +27,8 @@
     </summary>
         <div class="entries">
             {% if pinned_entry_forms %}
-                {% for entry_form in pinned_entry_forms %}
-                    <form method="POST" action="/edit-entry/{{ entry_form.id.data }}">
-                        {{ entry_form.csrf_token }}
-
-                        {{ entry_form.title }}
-                        {{ entry_form.text }}
-                        {{ entry_form.tags }}
-
-                        <div style="display: flex; justify-content: space-between; align-items: center">
-                            <small class="text-muted">{{ entry_form.datetime_msk.data }}</small>
-                            <div>
-                                <button type="submit" name="action" value="toggle-pin" title="Открепить">📌</button>
-                                <button type="submit" name="action" value="delete">🗑️</button>
-                                <button type="submit">💾</button>
-                            </div>
-                        </div>
-                    </form>
-
-
+                {% for item in pinned_entry_forms %}
+                    {{ entry_form(item, 'Открепить') }}
                 {% endfor %}
             {% else %}
                 <small class="text-muted">Нет закрепленных записей</small>
@@ -69,25 +42,8 @@
         <h2 style="display: inline-block">Записи за сегодня</h2>
     </summary>
         <div class="entries">
-            {% for entry_form in regular_entry_forms %}
-                <form method="POST" action="/edit-entry/{{ entry_form.id.data }}">
-                    {{ entry_form.csrf_token }}
-
-                    {{ entry_form.title }}
-                    {{ entry_form.text }}
-                    {{ entry_form.tags }}
-
-                    <div style="display: flex; justify-content: space-between; align-items: center">
-                        <small class="text-muted">{{ entry_form.datetime_msk.data }}</small>
-                        <div>
-                            <button type="submit" name="action" value="toggle-pin" title="Закрепить">📌</button>
-                            <button type="submit" name="action" value="delete">🗑️</button>
-                            <button type="submit">💾</button>
-                        </div>
-                    </div>
-                </form>
-
-
+            {% for item in regular_entry_forms %}
+                {{ entry_form(item, 'Закрепить') }}
             {% endfor %}
         </div>
     </details>

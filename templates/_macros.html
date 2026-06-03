@@ -1,0 +1,33 @@
+{% macro new_entry_form(form) %}
+    <form method="POST" id="new-entry-form">
+        {{ form.csrf_token }}
+
+        {{ form.title }}
+        {{ form.text }}
+        {{ form.tags }}
+
+        <div style="display: flex; flex-direction: row-reverse; gap: 8px">
+            <button type="submit">💾</button>
+            <button type="button" id="new-entry-clear">⏹️</button>
+        </div>
+    </form>
+{% endmacro %}
+
+{% macro entry_form(entry_form, pin_title) %}
+    <form method="POST" action="/edit-entry/{{ entry_form.id.data }}">
+        {{ entry_form.csrf_token }}
+
+        {{ entry_form.title }}
+        {{ entry_form.text }}
+        {{ entry_form.tags }}
+
+        <div style="display: flex; justify-content: space-between; align-items: center">
+            <small class="text-muted">{{ entry_form.datetime_msk.data }}</small>
+            <div>
+                <button type="submit" name="action" value="toggle-pin" title="{{ pin_title }}">📌</button>
+                <button type="submit" name="action" value="delete">🗑️</button>
+                <button type="submit">💾</button>
+            </div>
+        </div>
+    </form>
+{% endmacro %}
