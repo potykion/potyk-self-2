@@ -22,7 +22,7 @@
         {{ entry_form.tags }}
 
         <div style="display: flex; justify-content: space-between; align-items: center">
-            <small class="text-muted">{{ entry_form.datetime_msk.data.replace(microsecond=0) if entry_form.datetime_msk.data }}</small>
+            <small class="text-muted time">{{ entry_form.datetime_msk.data.replace(microsecond=0) if entry_form.datetime_msk.data }}</small>
             <div>
                 <button type="submit" name="action" value="toggle-pin"
                         title="{{ pin_title if pin_title is not none else ('Открепить' if entry_form.pinned.data else 'Закрепить') }}">

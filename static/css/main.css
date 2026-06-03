@@ -166,6 +166,14 @@ hr {
 }
 
 
+.ts-control {
+    padding: var(--input-padding) !important;
+}
+/* actual tag */
 .ts-wrapper.multi .ts-control > div {
+    padding: 0;
+    margin-bottom: 0 !important;
+}
+.time {
     padding: var(--input-padding);
 }
