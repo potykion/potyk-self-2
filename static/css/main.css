@@ -10,6 +10,7 @@
     --button-hover-bg: #e5e7eb;
     --alert-error-color: #7f1d1d;
     --alert-error-bg: #fee2e2;
+    --input-padding: 1px;
 }
 
 html[data-theme="light"] {
@@ -118,7 +119,7 @@ button:hover {
 textarea {
     width: -webkit-fill-available;
     border: 0;
-    padding: 0;
+    padding: var(--input-padding);
     overflow-y: hidden;
     resize: none;
     font-family: inherit;
@@ -127,7 +128,7 @@ textarea {
 .text-input {
     width: -webkit-fill-available;
     border: 0;
-    padding-left: 0;
+    padding-left: var(--input-padding);
     padding-top: 5px;
     padding-bottom: 5px;
 }
@@ -166,5 +167,5 @@ hr {
 
 
 .ts-wrapper.multi .ts-control > div {
-    padding: 0;
+    padding: var(--input-padding);
 }
