@@ -7,7 +7,7 @@
         {{ form.tags }}
 
         <div style="display: flex; flex-direction: row-reverse; gap: 8px">
-            <button type="submit">💾</button>
+            <button type="submit">💾 Сэйв</button>
             <button type="button" id="new-entry-clear">⏹️</button>
         </div>
     </form>
@@ -21,16 +21,16 @@
         {{ entry_form.text }}
         {{ entry_form.tags }}
 
-        <div style="display: flex; justify-content: space-between; align-items: center">
-            <small class="text-muted time">{{ entry_form.datetime_msk.data.replace(microsecond=0) if entry_form.datetime_msk.data }}</small>
+        <small style="display: flex; justify-content: space-between; align-items: center">
+            <div class="text-muted time">{{ entry_form.datetime_msk.data.replace(microsecond=0) if entry_form.datetime_msk.data }}</div>
             <div>
                 <button type="submit" name="action" value="toggle-pin"
                         title="{{ pin_title if pin_title is not none else ('Открепить' if entry_form.pinned.data else 'Закрепить') }}">
                     📌
                 </button>
                 <button type="submit" name="action" value="delete">🗑️</button>
-                <button type="submit">💾</button>
+                <button type="submit">💾 Сэйв</button>
             </div>
-        </div>
+        </small>
     </form>
 {% endmacro %}
