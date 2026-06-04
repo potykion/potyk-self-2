@@ -11,6 +11,7 @@
     --alert-error-color: #7f1d1d;
     --alert-error-bg: #fee2e2;
     --input-padding: 1px;
+    --new-entry-form-bg: lemonchiffon;
 }
 
 html[data-theme="light"] {
@@ -29,6 +30,7 @@ html[data-theme="dark"] {
     --button-hover-bg: #4b5563;
     --alert-error-color: #fecaca;
     --alert-error-bg: #7f1d1d;
+    --new-entry-form-bg: slateblue;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -44,6 +46,8 @@ html[data-theme="dark"] {
         --button-hover-bg: #4b5563;
         --alert-error-color: #fecaca;
         --alert-error-bg: #7f1d1d;
+        --new-entry-form-bg: slateblue;
+
     }
 }
 
@@ -53,7 +57,6 @@ body {
     font-family: "Rubik", system-ui;
     background: var(--bg-color);
     color: var(--text-color);
-    padding: 4px;
 }
 
 a {
@@ -169,15 +172,30 @@ hr {
 .ts-control {
     padding: var(--input-padding) !important;
 }
+
 /* actual tag */
 .ts-wrapper.multi .ts-control > div {
     padding: 0;
     margin-bottom: 0 !important;
 }
+
 .time {
     padding: var(--input-padding);
 }
 
+
+h1 {
+    text-align: center;
+}
 h2 {
-    margin-top:0;
+    font-weight: normal;
+}
+
+.new-entry-form {
+    background: var(--new-entry-form-bg);
+
+}
+details {
+    padding: 10px;
+    border-radius: 10px;
 }
