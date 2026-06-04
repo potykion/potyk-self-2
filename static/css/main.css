@@ -177,3 +177,7 @@ hr {
 .time {
     padding: var(--input-padding);
 }
+
+h2 {
+    margin-top:0;
+}

@@ -8,11 +8,15 @@
             flex-direction: column;
             gap: 10px;
         }
+
+        details {
+            margin-top: 10px;
+        }
     </style>
 {% endblock %}
 
 {% block main %}
-    <h1>Сегодня<br>{{ cur_date }}<br>{{ cur_date_weekday }}</h1>
+    <h1>Хэллоу, потик</h1>
 
     <details open>
         <summary>
@@ -30,8 +34,7 @@
     </details>
 
 
-
-    <details open>
+    <details open class="new-entry-form" >
         <summary>
             <h2 style="display: inline-block">Добавить новую запись</h2>
         </summary>
@@ -56,7 +59,7 @@
     <details open>
         <summary>
 
-            <h2 style="display: inline-block">Записи за сегодня</h2>
+            <h2 style="display: inline-block">Все записи</h2>
         </summary>
         <div class="entries">
             {% for item in regular_entry_forms %}
