@@ -105,4 +105,10 @@ def edit_entry(id):
         entry.tags = _parse_tags(form.tags.data)
         db.session.commit()
 
-    return flask.redirect("/")
+    form.tags.data = ",".join(entry.tags or [])
+    pin_title = "Открепить" if entry.pinned else "Закрепить"
+    return flask.render_template(
+        "_partials/entry_form.html",
+        entry_form=form,
+        pin_title=pin_title,
+    )

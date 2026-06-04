@@ -31,7 +31,12 @@
                 </button>
                 <button type="submit" name="action" value="delete">🗑️</button>
                 <button type="button" class="copy-text-btn" title="Копировать текст">📋</button>
-                <button type="submit">💾 Сэйв</button>
+                <button type="submit"
+                        hx-post="/edit-entry/{{ entry_form.id.data }}"
+                        hx-include="closest form"
+                        hx-target="closest form"
+                        hx-swap="outerHTML"
+                        >💾 Сэйв</button>
             </div>
         </small>
     </form>

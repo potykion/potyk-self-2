@@ -78,19 +78,7 @@
     </details>
 
     <script src="{{ url_for('static', filename='js/details-open-state.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/auto-resize-textarea.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/copy-textarea.js') }}"></script>
     <script src="{{ url_for('static', filename='js/new-entry-draft.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/entry-delete-confirm.js') }}"></script>
-    <script>
-        const existingTags = {{ all_tags | tojson }};
-        const tagOptions = existingTags.map((tag) => ({value: tag, text: tag}));
-
-        document.querySelectorAll(".tags-input").forEach((el) => {
-            new TomSelect(el, {
-                create: true,
-                options: tagOptions,
-            });
-        });
-    </script>
+    <script src="{{ url_for('static', filename='js/entry-form.js') }}"
+            data-tag-options='{{ all_tags | tojson }}'></script>
 {% endblock %}
