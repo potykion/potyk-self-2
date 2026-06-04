@@ -27,7 +27,7 @@
 {% block main %}
     <h1>Хэллоу, потик</h1>
 
-    <details open>
+    <details open data-details-id="random-entry">
         <summary>
             <div style="display: inline-block; width: calc(100% - 20px)">
                 <div style="display: flex;justify-content: space-between; align-items: center;">
@@ -43,14 +43,14 @@
     </details>
 
 
-    <details open class="new-entry-form">
+    <details open class="new-entry-form" data-details-id="new-entry">
         <summary>
             <h2 style="display: inline-block">Добавить новую запись</h2>
         </summary>
         {{ new_entry_form(form) }}
     </details>
 
-    <details open>
+    <details open data-details-id="pinned-entries">
         <summary>
             <h2 style="display: inline-block">Закрепленные записи</h2>
         </summary>
@@ -65,7 +65,7 @@
         </div>
     </details>
 
-    <details open>
+    <details open data-details-id="all-entries">
         <summary>
 
             <h2 style="display: inline-block">Все записи</h2>
@@ -77,6 +77,7 @@
         </div>
     </details>
 
+    <script src="{{ url_for('static', filename='js/details-open-state.js') }}"></script>
     <script src="{{ url_for('static', filename='js/auto-resize-textarea.js') }}"></script>
     <script src="{{ url_for('static', filename='js/new-entry-draft.js') }}"></script>
     <script src="{{ url_for('static', filename='js/entry-delete-confirm.js') }}"></script>
