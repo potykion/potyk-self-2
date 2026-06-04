@@ -11,7 +11,8 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = os.environ["FLASK_SECRET"]
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///potyk-self-2.db"
+    db_name = os.environ.get("DB_FILE_NAME", "potyk-self-2.db")
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///%s" % db_name
     db.init_app(app)
 
     setup_login(app)

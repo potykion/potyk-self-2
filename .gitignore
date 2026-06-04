@@ -5,3 +5,4 @@ gen
 .venv
 .env
 instance/potyk-self-2.db
+instance/*.db
