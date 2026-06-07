@@ -39,14 +39,15 @@ def index():
             joins_implicitly=True,
         )
         q = q.where(tag_elem.c.value == selected_tag)
-
     entries = db.session.execute(
         q
     ).scalars().all()
+
     pinned_entries = [entry for entry in entries if entry.pinned]
     regular_entries = [entry for entry in entries if not entry.pinned]
     pinned_entry_forms = [EntryForm(obj=entry) for entry in pinned_entries]
     regular_entry_forms = [EntryForm(obj=entry) for entry in regular_entries]
+
     all_tags: list[str] = []
     all_tags_seen: set[str] = set()
     for tags in db.session.execute(db.select(DiaryEntry.tags)).scalars():
