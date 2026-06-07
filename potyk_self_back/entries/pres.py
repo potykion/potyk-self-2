@@ -48,13 +48,12 @@ def index():
     pinned_entry_forms = [EntryForm(obj=entry) for entry in pinned_entries]
     regular_entry_forms = [EntryForm(obj=entry) for entry in regular_entries]
 
-    all_tags: list[str] = []
-    all_tags_seen: set[str] = set()
-    for tags in db.session.execute(db.select(DiaryEntry.tags)).scalars():
-        for tag in tags or []:
-            if tag and tag not in all_tags_seen:
-                all_tags_seen.add(tag)
-                all_tags.append(tag)
+    all_tags = sorted({
+        tag
+        for tags in db.session.execute(db.select(DiaryEntry.tags)).scalars()
+        for tag in (tags or [])
+        if tag
+    })
 
     for entry, entry_form in zip(pinned_entries, pinned_entry_forms):
         entry_form.tags.data = ",".join(entry.tags or [])
