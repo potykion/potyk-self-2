@@ -39,35 +39,35 @@ def index():
             joins_implicitly=True,
         )
         q = q.where(tag_elem.c.value == selected_tag)
-    entries = db.session.execute(
-        q
-    ).scalars().all()
+    entries = db.session.execute(q).scalars().all()
 
     pinned_entries = [entry for entry in entries if entry.pinned]
     regular_entries = [entry for entry in entries if not entry.pinned]
+
     pinned_entry_forms = [EntryForm(obj=entry) for entry in pinned_entries]
-    regular_entry_forms = [EntryForm(obj=entry) for entry in regular_entries]
-
-    all_tags = sorted({
-        tag
-        for tags in db.session.execute(db.select(DiaryEntry.tags)).scalars()
-        for tag in (tags or [])
-        if tag
-    })
-
     for entry, entry_form in zip(pinned_entries, pinned_entry_forms):
         entry_form.tags.data = ",".join(entry.tags or [])
 
+    regular_entry_forms = [EntryForm(obj=entry) for entry in regular_entries]
     for entry, entry_form in zip(regular_entries, regular_entry_forms):
         entry_form.tags.data = ",".join(entry.tags or [])
+
+    all_tags = sorted(
+        {
+            tag
+            for tags in db.session.execute(db.select(DiaryEntry.tags)).scalars()
+            for tag in (tags or [])
+            if tag
+        }
+    )
 
     random_entry = random.choice(entries) if entries else None
     random_entry_form = None
     if random_entry:
         random_entry_form = EntryForm(obj=random_entry)
         random_entry_form.tags.data = ",".join(random_entry.tags or [])
-    form = EntryForm()
 
+    form = EntryForm()
     if request.method == "POST" and form.validate_on_submit():
         form_data = form.data
         form_data.pop("csrf_token")
