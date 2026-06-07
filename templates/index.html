@@ -13,6 +13,7 @@
             margin-top: 0;
             margin-bottom: 0;
         }
+
         form {
             margin-top: 5px;
         }
@@ -67,9 +68,19 @@
 
     <details open data-details-id="all-entries">
         <summary>
-
             <h2 style="display: inline-block">Все записи</h2>
         </summary>
+
+        <div class="tags">
+            {% for tag in all_tags %}
+                <a class="tag {% if tag == selected_tag %}tag__selected{% endif %}" href="/?tag={{ tag }}" >
+                    <small>
+                        {{ tag }}
+                    </small>
+                </a>
+            {% endfor %}
+        </div>
+
         <div class="entries">
             {% for item in regular_entry_forms %}
                 {{ entry_form(item, 'Закрепить') }}

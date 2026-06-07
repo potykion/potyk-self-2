@@ -29,8 +29,14 @@ def index():
     cur_date = msk_now.date()
     cur_date_weekday = weekday_to_ru(cur_date.weekday())
 
+    selected_tag = flask.request.values.get("tag")
+
+    q = db.select(DiaryEntry).order_by(DiaryEntry.datetime_msk.desc())
+    if selected_tag:
+        q = q.where(DiaryEntry.tags.contains(selected_tag))
+
     entries = db.session.execute(
-        db.select(DiaryEntry).order_by(DiaryEntry.datetime_msk.desc())
+        q
     ).scalars().all()
     pinned_entries = [entry for entry in entries if entry.pinned]
     regular_entries = [entry for entry in entries if not entry.pinned]
@@ -79,6 +85,7 @@ def index():
         regular_entry_forms=regular_entry_forms,
         all_tags=all_tags,
         random_entry_form=random_entry_form,
+        selected_tag=selected_tag,
     )
 
 

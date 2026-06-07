@@ -6,9 +6,11 @@
 
 - [Github](https://github.com/potykion/potyk-self-2.git)
 
-## Prod Setup
+## Ops
 
-### First time
+### Prod Setup
+
+#### First time
 
 ```shell
 ssh-keygen
@@ -34,7 +36,7 @@ sudo systemctl enable --now potyk-self-2.service
 
 ```
 
-### Update
+#### Update
 
 ```shell
 ssh -l leybovich-nikita 84.201.131.244
@@ -46,4 +48,11 @@ pip install -r requirements.txt
 alembic upgrade head
 
 sudo systemctl restart potyk-self-2.service
+```
+
+### Copy prod bd backup to local
+
+```sh
+/home/leybovich-nikita/potyk-self-2/instance
+
 ```
