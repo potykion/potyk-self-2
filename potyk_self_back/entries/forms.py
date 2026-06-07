@@ -1,7 +1,14 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField, StringField, BooleanField
 from wtforms.fields.datetime import DateTimeLocalField
 from wtforms.validators import DataRequired
+
+if TYPE_CHECKING:
+    from potyk_self_back.entries.entites import DiaryEntry
 
 
 class EntryForm(FlaskForm):
@@ -31,3 +38,9 @@ class EntryForm(FlaskForm):
     )
     datetime_msk = DateTimeLocalField()
     pinned = BooleanField(default=False)
+
+    @classmethod
+    def from_entry(cls, entry: DiaryEntry) -> EntryForm:
+        form = cls(obj=entry)
+        form.tags.data = ",".join(entry.tags or [])
+        return form

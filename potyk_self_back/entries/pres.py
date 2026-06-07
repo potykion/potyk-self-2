@@ -44,13 +44,8 @@ def index():
     pinned_entries = [entry for entry in entries if entry.pinned]
     regular_entries = [entry for entry in entries if not entry.pinned]
 
-    pinned_entry_forms = [EntryForm(obj=entry) for entry in pinned_entries]
-    for entry, entry_form in zip(pinned_entries, pinned_entry_forms):
-        entry_form.tags.data = ",".join(entry.tags or [])
-
-    regular_entry_forms = [EntryForm(obj=entry) for entry in regular_entries]
-    for entry, entry_form in zip(regular_entries, regular_entry_forms):
-        entry_form.tags.data = ",".join(entry.tags or [])
+    pinned_entry_forms = [EntryForm.from_entry(entry) for entry in pinned_entries]
+    regular_entry_forms = [EntryForm.from_entry(entry) for entry in regular_entries]
 
     all_tags = sorted(
         {
@@ -61,11 +56,11 @@ def index():
         }
     )
 
-    random_entry = random.choice(entries) if entries else None
-    random_entry_form = None
-    if random_entry:
-        random_entry_form = EntryForm(obj=random_entry)
-        random_entry_form.tags.data = ",".join(random_entry.tags or [])
+    if entries:
+        random_entry: DiaryEntry = random.choice(entries)
+        random_entry_form: EntryForm | None = EntryForm.from_entry(random_entry)
+    else:
+        random_entry_form = None
 
     form = EntryForm()
     if request.method == "POST" and form.validate_on_submit():
@@ -82,9 +77,7 @@ def index():
         cur_date=cur_date,
         cur_date_weekday=cur_date_weekday,
         form=form,
-        pinned_entries=pinned_entries,
         pinned_entry_forms=pinned_entry_forms,
-        regular_entries=regular_entries,
         regular_entry_forms=regular_entry_forms,
         all_tags=all_tags,
         random_entry_form=random_entry_form,
@@ -107,15 +100,14 @@ def edit_entry(id):
         db.session.commit()
         return flask.redirect("/")
 
-    form = EntryForm(obj=entry)
+    form = EntryForm.from_entry(entry)
     if form.validate_on_submit():
         entry.title = form.title.data
         entry.text = form.text.data
         entry.datetime_msk = form.datetime_msk.data
         entry.tags = _parse_tags(form.tags.data)
         db.session.commit()
-
-    form.tags.data = ",".join(entry.tags or [])
+        form = EntryForm.from_entry(entry)
     pin_title = "Открепить" if entry.pinned else "Закрепить"
     return flask.render_template(
         "_partials/entry_form.html",
