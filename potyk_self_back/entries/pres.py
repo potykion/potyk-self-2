@@ -4,6 +4,7 @@ import flask
 from flask import Blueprint
 from flask import request
 from flask_login import login_required
+from sqlalchemy import func
 
 from potyk_self_back.core.db import db
 from potyk_self_back.core.dt_utils import weekday_to_ru, get_msk_now
@@ -33,7 +34,11 @@ def index():
 
     q = db.select(DiaryEntry).order_by(DiaryEntry.datetime_msk.desc())
     if selected_tag:
-        q = q.where(DiaryEntry.tags.contains(selected_tag))
+        tag_elem = func.json_each(DiaryEntry.tags).table_valued(
+            "value",
+            joins_implicitly=True,
+        )
+        q = q.where(tag_elem.c.value == selected_tag)
 
     entries = db.session.execute(
         q
@@ -44,19 +49,17 @@ def index():
     regular_entry_forms = [EntryForm(obj=entry) for entry in regular_entries]
     all_tags: list[str] = []
     all_tags_seen: set[str] = set()
-    for entry, entry_form in zip(pinned_entries, pinned_entry_forms):
-        entry_form.tags.data = ",".join(entry.tags or [])
-        for tag in entry.tags or []:
+    for tags in db.session.execute(db.select(DiaryEntry.tags)).scalars():
+        for tag in tags or []:
             if tag and tag not in all_tags_seen:
                 all_tags_seen.add(tag)
                 all_tags.append(tag)
 
+    for entry, entry_form in zip(pinned_entries, pinned_entry_forms):
+        entry_form.tags.data = ",".join(entry.tags or [])
+
     for entry, entry_form in zip(regular_entries, regular_entry_forms):
         entry_form.tags.data = ",".join(entry.tags or [])
-        for tag in entry.tags or []:
-            if tag and tag not in all_tags_seen:
-                all_tags_seen.add(tag)
-                all_tags.append(tag)
 
     random_entry = random.choice(entries) if entries else None
     random_entry_form = None

@@ -73,7 +73,16 @@
 
         <div class="tags">
             {% for tag in all_tags %}
-                <a class="tag {% if tag == selected_tag %}tag__selected{% endif %}" href="/?tag={{ tag }}" >
+                <a
+                        {% if tag == selected_tag %}
+                            class="tag tag__selected"
+                            href="{{ url_for('entries.index') }}"
+                        {% else %}
+                            class="tag "
+                            href="{{ url_for('entries.index', tag=tag) }}"
+                        {% endif %}
+
+                >
                     <small>
                         {{ tag }}
                     </small>
