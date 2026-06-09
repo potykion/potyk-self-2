@@ -10,6 +10,8 @@
     --button-hover-bg: #e5e7eb;
     --alert-error-color: #7f1d1d;
     --alert-error-bg: #fee2e2;
+    --alert-success-color: #166534;
+    --alert-success-bg: #dcfce7;
     --input-padding: 1px;
     --new-entry-form-bg: lemonchiffon;
 }
@@ -30,6 +32,8 @@ html[data-theme="dark"] {
     --button-hover-bg: #4b5563;
     --alert-error-color: #fecaca;
     --alert-error-bg: #7f1d1d;
+    --alert-success-color: #bbf7d0;
+    --alert-success-bg: #14532d;
     --new-entry-form-bg: slateblue;
 }
 
@@ -46,6 +50,8 @@ html[data-theme="dark"] {
         --button-hover-bg: #4b5563;
         --alert-error-color: #fecaca;
         --alert-error-bg: #7f1d1d;
+        --alert-success-color: #bbf7d0;
+        --alert-success-bg: #14532d;
         --new-entry-form-bg: slateblue;
 
     }
@@ -304,7 +310,7 @@ details {
 }
 
 form[action^="/edit-entry/"] {
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 form[action^="/edit-entry/"].htmx-swapping {
@@ -313,17 +319,28 @@ form[action^="/edit-entry/"].htmx-swapping {
 }
 
 form[action^="/edit-entry/"].htmx-added {
-    animation: entry-form-enter 0.25s ease-out;
+    animation: entry-form-save-success 0.5s ease-out;
 }
 
-@keyframes entry-form-enter {
-    from {
+@keyframes entry-form-save-success {
+    0% {
         opacity: 0;
         transform: translateY(-4px);
+        background-color: var(--alert-success-bg);
+        border-color: var(--alert-success-color);
     }
 
-    to {
+    35% {
         opacity: 1;
         transform: translateY(0);
+        background-color: var(--alert-success-bg);
+        border-color: var(--alert-success-color);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
     }
 }

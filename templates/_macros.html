@@ -30,7 +30,7 @@
                         hx-post="/edit-entry/{{ entry_form.id.data }}"
                         hx-include="closest form"
                         hx-target="closest form"
-                        hx-swap="outerHTML swap:250ms settle:100ms"
+                        hx-swap="outerHTML swap:500ms settle:500ms"
                         >💾 Сэйв</button>
                 <details class="entry-form-more">
                     <summary class="entry-form-btn" title="Ещё">⋯</summary>
@@ -46,7 +46,7 @@
                                 hx-post="/edit-entry/{{ entry_form.id.data }}"
                                 hx-include="closest form"
                                 hx-target="closest form"
-                                hx-swap="outerHTML swap:250ms"
+                                hx-swap="outerHTML swap:500ms"
                                 hx-confirm="Удалить эту запись?">🗑️ Удалить</button>
                     </div>
                 </details>
