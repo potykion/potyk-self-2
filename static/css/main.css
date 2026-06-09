@@ -132,6 +132,7 @@ textarea {
     overflow-y: hidden;
     resize: none;
     font-family: inherit;
+    background: inherit;
 }
 
 .text-input {
@@ -140,6 +141,7 @@ textarea {
     padding-left: var(--input-padding);
     padding-top: 5px;
     padding-bottom: 5px;
+    background: inherit;
 }
 
 .text-muted {
