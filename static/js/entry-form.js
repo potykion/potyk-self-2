@@ -10,8 +10,26 @@
         textarea.style.height = textarea.scrollHeight + 'px';
     }
 
+    function parseTagsValue(raw) {
+        return raw
+            .split(',')
+            .map((tag) => tag.trim())
+            .filter(Boolean);
+    }
+
+    function ensureTagOptions(tags) {
+        const seen = new Set(tagOptions.map((option) => option.value));
+        tags.forEach((tag) => {
+            if (seen.has(tag)) return;
+            tagOptions.push({ value: tag, text: tag });
+            seen.add(tag);
+        });
+    }
+
     function initEntryForm(form) {
         form.querySelectorAll('.tags-input').forEach((el) => {
+            const tags = parseTagsValue(el.value);
+            ensureTagOptions(tags);
             el.tomselect?.destroy();
             new TomSelect(el, {
                 create: true,
