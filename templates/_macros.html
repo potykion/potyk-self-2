@@ -30,7 +30,7 @@
                         hx-post="/edit-entry/{{ entry_form.id.data }}"
                         hx-include="closest form"
                         hx-target="closest form"
-                        hx-swap="outerHTML"
+                        hx-swap="outerHTML swap:250ms settle:100ms"
                         >💾 Сэйв</button>
                 <details class="entry-form-more">
                     <summary class="entry-form-btn" title="Ещё">⋯</summary>
@@ -39,7 +39,15 @@
                             📌 {{ pin_title if pin_title is not none else ('Открепить' if entry_form.pinned.data else 'Закрепить') }}
                         </button>
                         <button type="button" class="entry-form-btn copy-text-btn">📋 Копировать</button>
-                        <button type="submit" class="entry-form-btn" name="action" value="delete">🗑️ Удалить</button>
+                        <button type="submit"
+                                class="entry-form-btn"
+                                name="action"
+                                value="delete"
+                                hx-post="/edit-entry/{{ entry_form.id.data }}"
+                                hx-include="closest form"
+                                hx-target="closest form"
+                                hx-swap="outerHTML swap:250ms"
+                                hx-confirm="Удалить эту запись?">🗑️ Удалить</button>
                     </div>
                 </details>
             </div>

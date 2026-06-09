@@ -93,6 +93,8 @@ def edit_entry(id):
     if request.form.get("action") == "delete":
         db.session.delete(entry)
         db.session.commit()
+        if request.headers.get("HX-Request"):
+            return "", 200
         return flask.redirect("/")
 
     if request.form.get("action") == "toggle-pin":

@@ -92,12 +92,6 @@
 
         if (form.matches('form[action^="/edit-entry/"]')) {
             initEntryFormMore(form);
-
-            form.addEventListener('submit', (e) => {
-                if (e.submitter?.value === 'delete' && !confirm('Удалить эту запись?')) {
-                    e.preventDefault();
-                }
-            });
         }
     }
 

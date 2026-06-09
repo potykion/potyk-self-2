@@ -302,3 +302,28 @@ details {
     width: 100%;
     justify-content: flex-start;
 }
+
+form[action^="/edit-entry/"] {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+form[action^="/edit-entry/"].htmx-swapping {
+    opacity: 0;
+    transform: scale(0.98);
+}
+
+form[action^="/edit-entry/"].htmx-added {
+    animation: entry-form-enter 0.25s ease-out;
+}
+
+@keyframes entry-form-enter {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
