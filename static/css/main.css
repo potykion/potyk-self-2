@@ -230,3 +230,75 @@ details {
 .ts-control > .item:hover {
     background: var(--button-hover-bg) !important;
 }
+
+.entry-form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.entry-form-toolbar {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.entry-form-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    line-height: 1.2;
+    cursor: pointer;
+    background: var(--button-bg);
+    border: 1px solid var(--surface-muted-color);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.entry-form-btn:hover {
+    background: var(--button-hover-bg);
+}
+
+.entry-form-more {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    display: inline-flex;
+    align-items: center;
+}
+
+.entry-form-more > summary {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+.entry-form-more > summary::-webkit-details-marker {
+    display: none;
+}
+
+.entry-form-more__menu {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 4px);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+}
+
+.entry-form-more__menu .entry-form-btn {
+    width: 100%;
+    justify-content: flex-start;
+}

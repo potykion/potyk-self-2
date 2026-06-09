@@ -22,21 +22,26 @@
         {{ entry_form.text }}
         {{ entry_form.tags }}
 
-        <small style="display: flex; justify-content: space-between; align-items: center">
+        <small class="entry-form-footer">
             <div class="text-muted time">{{ entry_form.datetime_msk.data.replace(microsecond=0) if entry_form.datetime_msk.data }}</div>
-            <div>
-                <button type="submit" name="action" value="toggle-pin"
-                        title="{{ pin_title if pin_title is not none else ('Открепить' if entry_form.pinned.data else 'Закрепить') }}">
-                    📌
-                </button>
-                <button type="submit" name="action" value="delete">🗑️</button>
-                <button type="button" class="copy-text-btn" title="Копировать текст">📋</button>
+            <div class="entry-form-toolbar">
                 <button type="submit"
+                        class="entry-form-btn"
                         hx-post="/edit-entry/{{ entry_form.id.data }}"
                         hx-include="closest form"
                         hx-target="closest form"
                         hx-swap="outerHTML"
                         >💾 Сэйв</button>
+                <details class="entry-form-more">
+                    <summary class="entry-form-btn" title="Ещё">⋯</summary>
+                    <div class="entry-form-more__menu">
+                        <button type="submit" class="entry-form-btn" name="action" value="toggle-pin">
+                            📌 {{ pin_title if pin_title is not none else ('Открепить' if entry_form.pinned.data else 'Закрепить') }}
+                        </button>
+                        <button type="button" class="entry-form-btn copy-text-btn">📋 Копировать</button>
+                        <button type="submit" class="entry-form-btn" name="action" value="delete">🗑️ Удалить</button>
+                    </div>
+                </details>
             </div>
         </small>
     </form>
