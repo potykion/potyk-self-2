@@ -42,5 +42,8 @@ class EntryForm(FlaskForm):
     @classmethod
     def from_entry(cls, entry: DiaryEntry) -> EntryForm:
         form = cls(obj=entry)
-        form.tags.data = ",".join(entry.tags or [])
+        # TomSelect expects comma-separated tags; obj=entry gives a list.
+        # On POST, request data must not be overwritten by DB values.
+        if not form.is_submitted():
+            form.tags.data = ",".join(entry.tags or [])
         return form

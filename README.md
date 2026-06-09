@@ -54,5 +54,6 @@ sudo systemctl restart potyk-self-2.service
 
 ```sh
 /home/leybovich-nikita/potyk-self-2/instance
-
+scp leybovich-nikita@84.201.131.244:/home/leybovich-nikita/potyk-self-2/instance/backup.db ./instance/
+scp leybovich-nikita@84.201.131.244:/home/leybovich-nikita/potyk-self-2/instance/potyk-self-2.db ./instance/
 ```

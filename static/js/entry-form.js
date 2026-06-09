@@ -41,20 +41,22 @@
         }
     }
 
-    document.querySelectorAll('form[action^="/edit-entry/"]').forEach((form) => {
-        initEntryForm(form);
-    });
+    function initEntryFormsIn(root) {
+        if (!root?.querySelectorAll) return;
 
-    const newForm = document.getElementById('new-entry-form');
-    if (newForm) {
-        initEntryForm(newForm);
+        if (root.matches?.('form[action^="/edit-entry/"]') || root.id === 'new-entry-form') {
+            initEntryForm(root);
+            return;
+        }
+
+        root.querySelectorAll('form[action^="/edit-entry/"]').forEach(initEntryForm);
+        const newForm = root.querySelector('#new-entry-form');
+        if (newForm) initEntryForm(newForm);
     }
 
-    document.body.addEventListener('htmx:afterSwap', (e) => {
-        const el = e.detail.elt;
-        const form = el.matches?.('form[action^="/edit-entry/"]')
-            ? el
-            : el.querySelector?.('form[action^="/edit-entry/"]');
-        if (form) initEntryForm(form);
-    });
+    if (typeof htmx !== 'undefined') {
+        htmx.onLoad(initEntryFormsIn);
+    } else {
+        initEntryFormsIn(document.body);
+    }
 })();
