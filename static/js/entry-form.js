@@ -26,6 +26,29 @@
         });
     }
 
+    function copyViaExecCommand(textarea) {
+        textarea.focus();
+        const wasReadOnly = textarea.readOnly;
+        textarea.readOnly = true;
+        textarea.select();
+        textarea.setSelectionRange(0, textarea.value.length);
+        const copied = document.execCommand('copy');
+        textarea.readOnly = wasReadOnly;
+        return copied;
+    }
+
+    async function copyTextarea(textarea) {
+        if (copyViaExecCommand(textarea)) return;
+
+        if (navigator.clipboard?.writeText) {
+            try {
+                await navigator.clipboard.writeText(textarea.value);
+            } catch {
+                // ignore
+            }
+        }
+    }
+
     function initEntryForm(form) {
         form.querySelectorAll('.tags-input').forEach((el) => {
             const tags = parseTagsValue(el.value);
@@ -46,7 +69,7 @@
             btn.addEventListener('click', () => {
                 const textarea = form.querySelector('textarea');
                 if (!textarea) return;
-                navigator.clipboard.writeText(textarea.value);
+                copyTextarea(textarea);
             });
         });
 
