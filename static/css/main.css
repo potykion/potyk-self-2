@@ -210,12 +210,15 @@ details {
     flex-wrap: wrap;
 }
 
-.tag {
-    padding: 4px;
-    border-radius: 4px;
-    border: 1px solid var(--border-color);
-    text-decoration: none ;
+.tag,
+.ts-control > .item {
+    padding: 2px 4px  !important;
+    border-radius: 4px !important;
+    border: 1px solid var(--border-color) !important;
+    text-decoration: none  !important;
 }
+
+
 
 .tag__selected {
     /*border: 2px solid var(--border-color);*/
@@ -223,6 +226,7 @@ details {
     font-weight: bold;
 }
 
-.tag:hover {
-    background: var(--button-hover-bg);
+.tag:hover,
+.ts-control > .item:hover {
+    background: var(--button-hover-bg) !important;
 }
