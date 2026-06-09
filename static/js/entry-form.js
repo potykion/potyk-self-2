@@ -49,6 +49,23 @@
         }
     }
 
+    function initEntryFormMore(form) {
+        const more = form.querySelector('.entry-form-more');
+        if (!more) return;
+
+        more.querySelectorAll('.entry-form-more__menu button').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                more.open = false;
+            });
+        });
+
+        form.querySelectorAll('textarea').forEach((textarea) => {
+            textarea.addEventListener('focus', () => {
+                more.open = false;
+            });
+        });
+    }
+
     function initEntryForm(form) {
         form.querySelectorAll('.tags-input').forEach((el) => {
             const tags = parseTagsValue(el.value);
@@ -74,6 +91,8 @@
         });
 
         if (form.matches('form[action^="/edit-entry/"]')) {
+            initEntryFormMore(form);
+
             form.addEventListener('submit', (e) => {
                 if (e.submitter?.value === 'delete' && !confirm('Удалить эту запись?')) {
                     e.preventDefault();
