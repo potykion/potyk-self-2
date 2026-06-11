@@ -40,12 +40,19 @@ def index():
         )
         q = q.where(tag_elem.c.value == selected_tag)
     entries = db.session.execute(q).scalars().all()
+    active_entries = [entry for entry in entries if not entry.archived]
 
-    pinned_entries = [entry for entry in entries if entry.pinned]
-    regular_entries = [entry for entry in entries if not entry.pinned]
+    pinned_entries = [entry for entry in active_entries if entry.pinned]
+    regular_entries = [entry for entry in active_entries if not entry.pinned]
 
     pinned_entry_forms = [EntryForm.from_entry(entry) for entry in pinned_entries]
     regular_entry_forms = [EntryForm.from_entry(entry) for entry in regular_entries]
+
+    archived_q = db.select(DiaryEntry).where(DiaryEntry.archived.is_(True)).order_by(
+        DiaryEntry.datetime_msk.desc()
+    )
+    archived_entries = db.session.execute(archived_q).scalars().all()
+    archived_entry_forms = [EntryForm.from_entry(entry) for entry in archived_entries]
 
     all_tags = sorted(
         {
@@ -56,8 +63,8 @@ def index():
         }
     )
 
-    if entries:
-        random_entry: DiaryEntry = random.choice(entries)
+    if active_entries:
+        random_entry: DiaryEntry = random.choice(active_entries)
         random_entry_form: EntryForm | None = EntryForm.from_entry(random_entry)
     else:
         random_entry_form = None
@@ -79,6 +86,7 @@ def index():
         form=form,
         pinned_entry_forms=pinned_entry_forms,
         regular_entry_forms=regular_entry_forms,
+        archived_entry_forms=archived_entry_forms,
         all_tags=all_tags,
         random_entry_form=random_entry_form,
         selected_tag=selected_tag,
@@ -100,6 +108,15 @@ def edit_entry(id):
     if request.form.get("action") == "toggle-pin":
         entry.pinned = not entry.pinned
         db.session.commit()
+        return flask.redirect("/")
+
+    if request.form.get("action") == "toggle-archive":
+        entry.archived = not entry.archived
+        if entry.archived:
+            entry.pinned = False
+        db.session.commit()
+        if request.headers.get("HX-Request"):
+            return "", 200
         return flask.redirect("/")
 
     form = EntryForm.from_entry(entry)

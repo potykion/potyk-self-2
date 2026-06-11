@@ -58,7 +58,7 @@
         <div class="entries">
             {% if pinned_entry_forms %}
                 {% for item in pinned_entry_forms %}
-                    {{ entry_form(item, 'Открепить') }}
+                    {{ entry_form(item, 'Открепить', 'В архив') }}
                 {% endfor %}
             {% else %}
                 <small class="text-muted">Нет закрепленных записей</small>
@@ -92,8 +92,23 @@
 
         <div class="entries">
             {% for item in regular_entry_forms %}
-                {{ entry_form(item, 'Закрепить') }}
+                {{ entry_form(item, 'Закрепить', 'В архив') }}
             {% endfor %}
+        </div>
+    </details>
+
+    <details data-details-id="archived-entries">
+        <summary>
+            <h2 style="display: inline-block">Архив</h2>
+        </summary>
+        <div class="entries">
+            {% if archived_entry_forms %}
+                {% for item in archived_entry_forms %}
+                    {{ entry_form(item, archive_title='Из архива', show_pin=False) }}
+                {% endfor %}
+            {% else %}
+                <small class="text-muted">Нет архивных записей</small>
+            {% endif %}
         </div>
     </details>
 

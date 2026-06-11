@@ -24,3 +24,7 @@ class DiaryEntry(db.Model):
         nullable=False,
         default=False,
     )
+    archived: Mapped[bool] = mapped_column(
+        nullable=False,
+        default=False,
+    )

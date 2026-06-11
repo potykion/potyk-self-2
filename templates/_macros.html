@@ -14,7 +14,7 @@
     </form>
 {% endmacro %}
 
-{% macro entry_form(entry_form, pin_title=None) %}
+{% macro entry_form(entry_form, pin_title=None, archive_title=None, show_pin=True) %}
     <form method="POST" action="/edit-entry/{{ entry_form.id.data }}">
         {{ entry_form.csrf_token }}
 
@@ -35,8 +35,20 @@
                 <details class="entry-form-more">
                     <summary class="entry-form-btn" title="Ещё">⋯</summary>
                     <div class="entry-form-more__menu">
+                        {% if show_pin %}
                         <button type="submit" class="entry-form-btn" name="action" value="toggle-pin">
                             📌 {{ pin_title if pin_title is not none else ('Открепить' if entry_form.pinned.data else 'Закрепить') }}
+                        </button>
+                        {% endif %}
+                        <button type="submit"
+                                class="entry-form-btn"
+                                name="action"
+                                value="toggle-archive"
+                                hx-post="/edit-entry/{{ entry_form.id.data }}"
+                                hx-include="closest form"
+                                hx-target="closest form"
+                                hx-swap="outerHTML swap:500ms">
+                            📦 {{ archive_title if archive_title is not none else ('Из архива' if entry_form.archived.data else 'В архив') }}
                         </button>
                         <button type="button" class="entry-form-btn copy-text-btn">📋 Копировать</button>
                         <button type="submit"

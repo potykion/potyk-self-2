@@ -38,6 +38,7 @@ class EntryForm(FlaskForm):
     )
     datetime_msk = DateTimeLocalField()
     pinned = BooleanField(default=False)
+    archived = BooleanField(default=False)
 
     @classmethod
     def from_entry(cls, entry: DiaryEntry) -> EntryForm:
